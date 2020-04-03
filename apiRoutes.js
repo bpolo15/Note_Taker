@@ -1,21 +1,19 @@
-var activeNotes = require("./server");
+var activeNotes = require("./db/noteData");
 
 module.exports = function(app){
 
-app.get("/notes", function(req, res){
+app.get("/api/notes", function(req, res){
   res.json(activeNotes);
-})
+});
 
 app.post("/api/notes", function(req, res){
-  res.json(req.body);
-})
-}
-// app.post("/notes", function(req, res){
-//  activeNotes.push(req.body);
-//  console.log(activeNotes);
+  activeNotes.push(req.body)
 
-// })
+   res.json({ message: "Adding Note!"})
+});
 
+
+};
     
   
     
