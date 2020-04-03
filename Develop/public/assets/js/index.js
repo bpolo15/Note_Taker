@@ -1,3 +1,4 @@
+
 var $noteTitle = $(".note-title");
 var $noteText = $(".note-textarea");
 var $saveNoteBtn = $(".save-note");
@@ -51,10 +52,12 @@ var renderActiveNote = function() {
 
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function() {
+  console.log("Click")
   var newNote = {
     title: $noteTitle.val(),
     text: $noteText.val()
   };
+  console.log(newNote)
 
   saveNote(newNote).then(function(data) {
     getAndRenderNotes();
