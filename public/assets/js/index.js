@@ -1,6 +1,3 @@
-
-
-
 var $noteTitle = $(".note-title");
 var $noteText = $(".note-textarea");
 var $saveNoteBtn = $(".save-note");
@@ -54,13 +51,13 @@ var renderActiveNote = function() {
 
 // Get the note data from the inputs, save it to the db and update the view
 var handleNoteSave = function() {
-  console.log("Click")
+  var uniqueID = Math.floor(Math.random()*100);
   var newNote = {
     title: $noteTitle.val(),
-    text: $noteText.val()
+    text: $noteText.val(),
+    id: uniqueID
   };
-  console.log(newNote)
-
+  console.log(newNote);
   saveNote(newNote).then(function(data) {
     getAndRenderNotes();
     renderActiveNote();
@@ -75,7 +72,8 @@ var handleNoteDelete = function(event) {
   var note = $(this)
     .parent(".list-group-item")
     .data();
-
+ console.log(activeNote.id);
+ console.log(note.id);
   if (activeNote.id === note.id) {
     activeNote = {};
   }
@@ -116,19 +114,28 @@ var renderNoteList = function(notes) {
 
  for (var i = 0; i < notes.length; i++) {
     var note = notes[i];
+    var uniqueID = i;
+    //  console.log(note);
+    //  console.log(uniqueID);
+     note.id = uniqueID;
+  
 
     var $li = $("<li class='list-group-item'>").data(note);
-    //$li.attr("id", i)
     var $span = $("<span>").text(note.title);
     var $delBtn = $(
       "<i class='fas fa-trash-alt float-right text-danger delete-note'>"
     );
 
     $li.append($span, $delBtn);
+    
+    
     noteListItems.push($li);
+    
   }
 
   $noteList.append(noteListItems);
+
+ 
 };
 
 // Gets notes from the db and renders them to the sidebar
